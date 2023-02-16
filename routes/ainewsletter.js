@@ -151,7 +151,6 @@ router.post("/updateDiscord", async (req, res) => {
       }
 
       jobScheduler(discordbot(channelID))
-      return res.status(201).json({ message: "Discord Bot is updated" })
 
    } catch (error) {
       res.status(500).json({ message: "Internal Server Error" });
