@@ -12,53 +12,54 @@ const nodeSchedule = require('node-schedule');
 const cron = require("node-cron");
 const jobScheduler = require("../utils/jobScheduler")
 
+const discordbot = require("../utils/discordbot")
+
 // require("../db/conn");
 
 module.exports = router;
 
 require("dotenv").config();
-const { Client, GatewayIntentBits } = require('discord.js');
+// const { Client, GatewayIntentBits } = require('discord.js');
 
-const client = new Client({
-   intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.MessageContent
-   ]
-});
+// const client = new Client({
+//    intents: [
+//       GatewayIntentBits.Guilds,
+//       GatewayIntentBits.GuildMessages,
+//       GatewayIntentBits.MessageContent
+//    ]
+// });
 
-const discordbot = (options) => {
-   client.on('messageCreate', async (message) => {
-      // if (message.author.bot) return;
-      // const channel = client.channels.cache.get("956556783189651468")
-      const channel = client.channels.cache.get(options)
-
-
-      // if (message.author.bot) {
-      channel.messages.fetch({ limit: 100 }).then(messages => {
-         console.log(`Received ${messages.size} messages`);
-         //Iterate through the messages here with the variable "messages".
-         messages.forEach(message => console.log(message.content))
-      })
-   })
-}
+// const discordbot = (options) => {
+//    client.on('messageCreate', async (message) => {
+//       // if (message.author.bot) return;
+//       // const channel = client.channels.cache.get("956556783189651468")
+//       const channel = client.channels.cache.get(options)
 
 
-client.login(process.env.BOT_TOKEN);
+//       // if (message.author.bot) {
+//       channel.messages.fetch({ limit: 100 }).then(messages => {
+//          console.log(`Received ${messages.size} messages`);
+//          //Iterate through the messages here with the variable "messages".
+//          messages.forEach(message => console.log(message.content))
+//       })
+//    })
+// }
+
+
+// client.login(process.env.BOT_TOKEN);
 
 
 router.get("/test", async (req, res) => {
-   let ranks = ['A', 'B', 'C'];
+   
 
-   ranks.forEach(function (e) {
-      console.log(e);
-   });
-   res.status(201).json({ message: "Testing discord newsletter" })
 })
+
+
 
 router.get("/channelDelete", async (req, res) => {
    try {
-      const deleteChannels = await DiscordSchema.deleteMany()
+      const deleteChannels = await DiscordSchema.deleteMany({  })
+      console.log(deleteChannels);
       if (deleteChannels) {
          console.log(true);
          res.status(201).json({ message: "All Channels deleted" })
@@ -117,47 +118,47 @@ router.post("/createChannel", async (req, res) => {
    }
 })
 
-router.post("/updateDiscord", async (req, res) => {
-   const { serverName, channelID, channelName } = req.body;
-   if (!serverName || !channelID || !channelName) {
-      return res.status(422).json({ error: "Some data fields are missing" });
-   }
-   try {
-      let sampleText = []
-      let discordText = ''
-      const discordbot = (options) => {
-         client.on('messageCreate', async (message) => {
-            // if (message.author.bot) return;
-            const channel = client.channels.cache.get(options)
-            //  if (message.author.bot) {
-            channel.messages.fetch({ limit: 100 }).then(async messages => {
-               console.log(`Received ${messages.size} messages`);
-               //Iterate through the messages here with the variable "messages".
-               messages.forEach(message => sampleText.push(message.content))
+// router.post("/updateDiscord", async (req, res) => {
+//    const { serverName, channelID, channelName } = req.body;
+//    if (!serverName || !channelID || !channelName) {
+//       return res.status(422).json({ error: "Some data fields are missing" });
+//    }
+//    try {
+//       let sampleText = []
+//       let discordText = ''
+//       const discordbot = (options) => {
+//          client.on('messageCreate', async (message) => {
+//             // if (message.author.bot) return;
+//             const channel = client.channels.cache.get(options)
+//             //  if (message.author.bot) {
+//             channel.messages.fetch({ limit: 100 }).then(async messages => {
+//                console.log(`Received ${messages.size} messages`);
+//                //Iterate through the messages here with the variable "messages".
+//                messages.forEach(message => sampleText.push(message.content))
 
-               let result = ''
-               for (let i = 0; i < sampleText.length; i++) {
-                  result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
-                  result = result.replace(/[^a-zA-Z ]/g, "")
-                  result = result + " "
-                  result = result.concat(sampleText[i]);
-               }
+//                let result = ''
+//                for (let i = 0; i < sampleText.length; i++) {
+//                   result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
+//                   result = result.replace(/[^a-zA-Z ]/g, "")
+//                   result = result + " "
+//                   result = result.concat(sampleText[i]);
+//                }
 
-               const updatedContent = await DiscordSchema.updateOne({ channelID: channelID }, { $set: { channelContent: result } }, { upsert: true })
+//                const updatedContent = await DiscordSchema.updateOne({ channelID: channelID }, { $set: { channelContent: result } }, { upsert: true })
 
-            })
-            // }
-         })
-      }
+//             })
+//             // }
+//          })
+//       }
 
-      jobScheduler(discordbot(channelID))
+//       jobScheduler(discordbot(channelID))
 
-   } catch (error) {
-      res.status(500).json({ message: "Internal Server Error" });
-      console.log(error);
-   }
+//    } catch (error) {
+//       res.status(500).json({ message: "Internal Server Error" });
+//       console.log(error);
+//    }
 
-})
+// })
 
 router.post("/updateSummary", async (req, res) => {
    const { serverName, channelID, channelName } = req.body;
@@ -168,7 +169,7 @@ router.post("/updateSummary", async (req, res) => {
       const channelSummaryData = await DiscordSchema.findOne({ channelID: channelID })
       if (channelSummaryData !== undefined) {
          discordText = channelSummaryData['channelContent'][0]
-         discordText = discordText.slice(0, 1999)
+         discordText = discordText.slice(0, 1850)
          if (discordText !== undefined) {
             sdk.auth(process.env.CHATSONIC_KEY);
             sdk.chatsonic_V2BusinessContentChatsonic_post({

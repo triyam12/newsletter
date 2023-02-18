@@ -7,6 +7,9 @@ const discordSchema = new mongoose.Schema({
     "channelID": {
         type: String
     },
+    "channelName": {
+        type: String
+    },
     "channelContent": {
         type: Array,
         "default": []

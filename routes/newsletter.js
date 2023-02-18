@@ -161,7 +161,7 @@ client.on("error", (err) => {
 //     name: '',
 //     notes: 'Check this out!'
 // };
- 
+
 // emailjs.send('service_ks1j8da', 'template_udicn69', templateParams)
 //     .then(function(response) {
 //        console.log('SUCCESS!', response.status, response.text);
@@ -227,20 +227,20 @@ client.on("error", (err) => {
 //     // if (message.author.bot) return;
 //     const channel = client.channels.cache.get("956556783189651468")
 
-    
+
 //     // if (message.author.bot) {
 //         channel.messages.fetch({ limit: 100 }).then(messages => {
 //             console.log(`Received ${messages.size} messages`);
 //             //Iterate through the messages here with the variable "messages".
 //             messages.forEach(message => console.log(message.content))
 //           })
-    // };
-    
-    
+// });
 
-    // console.log(message.author.bot.content);
 
-    //   return message.reply(`${data}`);
+
+// console.log(message.author.bot.content);
+
+//   return message.reply(`${data}`);
 
 // })
 
@@ -250,32 +250,47 @@ client.on("error", (err) => {
 
 
 
-const mailchimp = require("@mailchimp/mailchimp_marketing")
-mailchimp.setConfig({
-    apiKey: "041403684e1656c8c89c48a93b0f2a6d-us21",
-    server: "us21",
-})
+// const mailchimp = require("@mailchimp/mailchimp_marketing")
+// mailchimp.setConfig({
+//     apiKey: "041403684e1656c8c89c48a93b0f2a6d-us21",
+//     server: "us21",
+// })
 
-const express = require('express')
+// const express = require('express')
 
-app.post('/audience/create', async (req, res) => {
-    const { name, company, address, city, state, zip, country, from_name, from_email, subject, language } = req.body
-const footerContactInfo = { company, address1: address, city, state, zip, country }
-const campaignDefaults = { from_name, from_email, subject, language }
-async function createAudience() {
-        try {
-            const audience = await mailchimp.lists.createList({
-                name: name,
-                contact: footerContactInfo,
-                permission_reminder: "*|LIST:DESCRIPTION|*",
-                email_type_option: true,
-                campaign_defaults: campaignDefaults
-            })
-res.send(audience.id)
-        }
-        catch (err) {
-            res.status(400).send(err)
-        }
-    }
-createAudience()
-})
+// app.post('/audience/create', async (req, res) => {
+//     const { name, company, address, city, state, zip, country, from_name, from_email, subject, language } = req.body
+// const footerContactInfo = { company, address1: address, city, state, zip, country }
+// const campaignDefaults = { from_name, from_email, subject, language }
+// async function createAudience() {
+//         try {
+//             const audience = await mailchimp.lists.createList({
+//                 name: name,
+//                 contact: footerContactInfo,
+//                 permission_reminder: "*|LIST:DESCRIPTION|*",
+//                 email_type_option: true,
+//                 campaign_defaults: campaignDefaults
+//             })
+// res.send(audience.id)
+//         }
+//         catch (err) {
+//             res.status(400).send(err)
+//         }
+//     }
+// createAudience()
+// })
+
+// client.on('messageCreate', async (message) => {
+//     // if (message.author.bot) return;
+//     const channel = client.channels.cache.get("1072633629525680311")
+
+
+//     // if (message.author.bot) {
+//         channel.messages.fetch({ limit: 100 }).then(messages => {
+//             console.log(`Received ${messages.size} messages`);
+//             //Iterate through the messages here with the variable "messages".
+//             messages.forEach(message => message.reply(`Hatt maa ki chut`))
+//           })
+// });
+
+// client.login("MTA3NTk2MTQ4NDgxNjk1NzQ5MA.GFqs8I.zn7QbLxayOa5tFdMCu9p_WfWbliTXK_wUSPEiM");
