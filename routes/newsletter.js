@@ -32,34 +32,34 @@
 
 // module.exports = router;
 
-require("dotenv").config();
-const { Client, GatewayIntentBits } = require('discord.js');
-const { Configuration, OpenAIApi } = require("openai");
-// const router = require("./auth");
+// require("dotenv").config();
+// const { Client, GatewayIntentBits } = require('discord.js');
+// const { Configuration, OpenAIApi } = require("openai");
+// // const router = require("./auth");
 
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
-});
+// const client = new Client({
+//     intents: [
+//         GatewayIntentBits.Guilds,
+//         GatewayIntentBits.GuildMessages,
+//         GatewayIntentBits.MessageContent
+//     ]
+// });
 
-const configuration = new Configuration({
-    // apiKey: process.env.OPENAI_API_KEY
-    apiKey: "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"
-})
+// const configuration = new Configuration({
+//     // apiKey: process.env.OPENAI_API_KEY
+//     apiKey: "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"
+// })
 
-const openai = new OpenAIApi(configuration)
+// const openai = new OpenAIApi(configuration)
 
-client.on("ready", () => {
-    console.log("Bot is connected and ready");
-})
+// client.on("ready", () => {
+//     console.log("Bot is connected and ready");
+// })
 
-client.on("error", (err) => {
-    console.error(err);
-});
+// client.on("error", (err) => {
+//     console.error(err);
+// });
 
 // client.on('messageCreate', function (message) {
 //     if (message.author.bot) return;

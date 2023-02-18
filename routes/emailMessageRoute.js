@@ -1,8 +1,8 @@
-const express = require("express");
-const { sendEmailMsgCtrl } = require("../controllers/emailMessageController");
-const authMiddleware = require("../middleware/authenticate");
-const emailMsgRoute = express.Router();
+// const express = require("express");
+// const { sendEmailMsgCtrl } = require("../controllers/emailMessageController");
+// const authMiddleware = require("../middleware/authenticate");
+// const emailMsgRoute = express.Router();
 
-emailMsgRoute.post("/", sendEmailMsgCtrl);
+// emailMsgRoute.post("/", sendEmailMsgCtrl);
 
-module.exports = emailMsgRoute;
+// module.exports = emailMsgRoute;
