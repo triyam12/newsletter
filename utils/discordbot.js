@@ -41,7 +41,7 @@ const discordbot = async (options) => {
           }
 
 
-          const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $push: { channelContent: sampleText } }, { upsert: true })
+          const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
           // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
           sampleText.length = 0
