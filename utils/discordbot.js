@@ -14,8 +14,7 @@ const client = new Client({
 const discordbot = async (options) => {
   client.on('messageCreate', async (message) => {
     try {
-      if (message.author.bot) {
-        let channelIDarray = []
+      let channelIDarray = []
       const channelInfo = await DiscordSchema.find()
 
       for (let j = 0; j < channelInfo.length; j++) {
@@ -37,19 +36,18 @@ const discordbot = async (options) => {
           for (let i = 0; i < sampleText.length; i++) {
             result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
             result = result.replace(/[^a-zA-Z ]/g, "")
-            result = result + ""
+            result = result + " "
             result = result.concat(sampleText[i]);
           }
 
-          console.log(sampleText);
+
           const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $push: { channelContent: sampleText } }, { upsert: true })
           // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
           sampleText.length = 0
 
         })
-      }
-    
+
 
       }
 
