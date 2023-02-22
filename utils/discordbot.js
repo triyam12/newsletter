@@ -14,6 +14,7 @@ const client = new Client({
 const discordbot = async (options) => {
   client.on('messageCreate', async (message) => {
     try {
+      if (message.author.bot) return;
       let channelIDarray = []
       const channelInfo = await DiscordSchema.find()
 
@@ -40,8 +41,8 @@ const discordbot = async (options) => {
             result = result.concat(sampleText[i]);
           }
 
-
-          const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
+          console.log(sampleText);
+          // const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $push: { channelContent: sampleText } }, { upsert: true })
           // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
           sampleText.length = 0

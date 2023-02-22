@@ -21,12 +21,12 @@ router.get("/test", async (req, res) => {
 router.get("/jsonToCSV", async (req, res) => {
     try {
         const discordData = await DiscordSchema.find({})
-        // console.log(discordData);
-        // const discordChannelContent = discordData[0]['channelContent']
-        // console.log(discordData[0]['channelContent']);
+        console.log(discordData);
 
         if (discordData !== undefined) {
             const csv = new ObjectsToCsv(discordData)
+
+            console.log(csv);
 
             await csv.toDisk(`temp/discordData.csv`);
 
