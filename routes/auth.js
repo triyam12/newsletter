@@ -35,7 +35,8 @@ router.post("/suscribe", async (req, res) => {
       res.status(201).json({ message: "User Suscribed Successfully" });
     }
   } catch (error) {
-    
+    res.status(500).json({ message: "Internal Server Error" });
+    console.log(error);
   }
 })
 

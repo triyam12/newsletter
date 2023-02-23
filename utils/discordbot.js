@@ -26,29 +26,29 @@ const discordbot = async (options) => {
 
 
 
-        //  if (message.author.bot) {
-        channel.messages.fetch({ limit: 100 }).then(async messages => {
-          console.log(`Received ${messages.size} messages`);
-          //Iterate through the messages here with the variable "messages".
-          messages.forEach(message => sampleText.push(message.content))
+        if (message.author.bot) {
+          channel.messages.fetch({ limit: 100 }).then(async messages => {
+            console.log(`Received ${messages.size} messages`);
+            //Iterate through the messages here with the variable "messages".
+            messages.forEach(message => sampleText.push(message.content))
 
-          let result = ''
-          for (let i = 0; i < sampleText.length; i++) {
-            result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
-            result = result.replace(/[^a-zA-Z ]/g, "")
-            result = result + " "
-            result = result.concat(sampleText[i]);
-          }
-
-
-          const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
-          // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
-
-          sampleText.length = 0
-
-        })
+            let result = ''
+            for (let i = 0; i < sampleText.length; i++) {
+              result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
+              result = result.replace(/[^a-zA-Z ]/g, "")
+              result = result + " "
+              result = result.concat(sampleText[i]);
+            }
 
 
+            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
+            // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
+
+            sampleText.length = 0
+
+          })
+
+        }
       }
 
     } catch (error) {

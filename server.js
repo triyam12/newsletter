@@ -19,7 +19,7 @@ app.get("/", async(req, res) => {
 })
 
 cron.schedule("0 0 */1 * * *", () => {
-// cron.schedule("0 */1 * * * *", () => {
+// cron.schedule(" */1 * * * * *", () => {
     console.log("---------------------");
     discordbot
     console.log("running discord bot in every  1 hours");
