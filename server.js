@@ -25,6 +25,8 @@ cron.schedule("0 0 */1 * * *", () => {
     console.log("running discord bot in every  1 hours");
 });
 
+console.log("hello");
+
 app.listen(port ,() => {
     console.log(`Server app listening on ${port}`)
 })

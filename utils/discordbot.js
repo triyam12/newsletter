@@ -26,7 +26,7 @@ const discordbot = async (options) => {
 
 
 
-        if (message.author.bot) {
+        // if (message.author.bot) {
           channel.messages.fetch({ limit: 100 }).then(async messages => {
             console.log(`Received ${messages.size} messages`);
             //Iterate through the messages here with the variable "messages".
@@ -38,9 +38,10 @@ const discordbot = async (options) => {
               result = result.replace(/[^a-zA-Z ]/g, "")
               result = result + " "
               result = result.concat(sampleText[i]);
+
             }
 
-
+            console.log(sampleText);
             const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
             // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
@@ -48,7 +49,7 @@ const discordbot = async (options) => {
 
           })
 
-        }
+        // }
       }
 
     } catch (error) {
