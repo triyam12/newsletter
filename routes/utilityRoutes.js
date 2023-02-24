@@ -34,6 +34,7 @@ router.get("/jsonData", async (req, res) => {
 
             return res.download(`temp/discordData.json`, () => {
                 fs.unlinkSync(`temp/discordData.json`)
+               
             })
         }
 
