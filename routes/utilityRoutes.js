@@ -9,7 +9,7 @@ const data = [
     { code: 'NY', name: 'New York' },
 ];
 
-const DiscordSchema = require("../model/discordSchema")
+const DiscordSchema = require("../model/discordSchema");
 
 require("dotenv").config();
 module.exports = router;
@@ -18,20 +18,22 @@ router.get("/test", async (req, res) => {
     return res.status(201).json({ message: "Testing utility routes" });
 })
 
-router.get("/jsonToCSV", async (req, res) => {
+router.get("/jsonData", async (req, res) => {
     try {
         const discordData = await DiscordSchema.find({})
-        console.log(discordData);
+
+        var json = JSON.stringify(discordData);
 
         if (discordData !== undefined) {
-            const csv = new ObjectsToCsv(discordData)
+            // const csv = new ObjectsToCsv(discordData)
 
-            console.log(csv);
+            // console.log(csv);
 
-            await csv.toDisk(`temp/discordData.csv`);
+            // await csv.toDisk(`temp/discordData.csv`);
+            fs.writeFileSync('temp/discordData.json', json, 'utf8')
 
-            return res.download(`temp/discordData.csv`, () => {
-                fs.unlinkSync(`temp/discordData.csv`)
+            return res.download(`temp/discordData.json`, () => {
+                fs.unlinkSync(`temp/discordData.json`)
             })
         }
 
