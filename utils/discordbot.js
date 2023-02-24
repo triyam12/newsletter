@@ -38,27 +38,50 @@ const discordbot = async (options) => {
               result = result.replace(/[^a-zA-Z ]/g, "")
               result = result + " "
               result = result.concat(sampleText[i]);
-
             }
+
+            Array.prototype.unique = function() {
+              var a = this.concat();
+              for(var i=0; i<a.length; ++i) {
+                  for(var j=i+1; j<a.length; ++j) {
+                      if(a[i] === a[j])
+                          a.splice(j--, 1);
+                  }
+              }
+          
+              return a;
+          };
 
             const existingcontent = channelInfo[j]['channelContent']
-            for(let k=0; k < existingcontent.length; k++) {
-              for (let m = 0; m < sampleText.length; m++) {
-                if(existingcontent[k] === sampleText[m]) {
-                  existingcontent.splice(k, 1, sampleText[m]);
-                  break;
-                }
-              }
-            
-            }
-            
-            console.log(existingcontent);
 
+            let latestContent = existingcontent.concat(sampleText).unique()
 
-            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: existingcontent } }, { upsert: true })
+            // let tempArr = []
+
+            // for (let k of existingcontent.concat(sampleText2)) {
+            //   if (!tempArr[k]) {
+            //     // tempArr[k.name] = k
+            //     tempArr.push(k)
+                
+            //   }
+              
+            // }
+            // console.log(tempArr);
+            // let latestContent = []
+
+            // for(let k in tempArr) {
+            //   latestContent.push(tempArr[k])
+            // }
+
+            // console.log(latestContent);
+
+            // latestContent = existingcontent.concat(latestContent)
+            // console.log(latestContent);
+            
+            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: latestContent } }, { upsert: true })
             // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
-            sampleText.length = 0
+            // sampleText.length = 0
 
           })
 
