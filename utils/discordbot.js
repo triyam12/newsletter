@@ -41,8 +41,21 @@ const discordbot = async (options) => {
 
             }
 
-            console.log(sampleText);
-            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
+            const existingcontent = channelInfo[j]['channelContent']
+            for(let k=0; k < existingcontent.length; k++) {
+              for (let m = 0; m < sampleText.length; m++) {
+                if(existingcontent[k] === sampleText[m]) {
+                  existingcontent.splice(k, 1, sampleText[m]);
+                  break;
+                }
+              }
+            
+            }
+            
+            console.log(existingcontent);
+
+
+            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: existingcontent } }, { upsert: true })
             // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
             sampleText.length = 0
