@@ -56,32 +56,11 @@ const discordbot = async (options) => {
 
             let latestContent = existingcontent.concat(sampleText).unique()
 
-            // let tempArr = []
-
-            // for (let k of existingcontent.concat(sampleText2)) {
-            //   if (!tempArr[k]) {
-            //     // tempArr[k.name] = k
-            //     tempArr.push(k)
-                
-            //   }
-              
-            // }
-            // console.log(tempArr);
-            // let latestContent = []
-
-            // for(let k in tempArr) {
-            //   latestContent.push(tempArr[k])
-            // }
-
-            // console.log(latestContent);
-
-            // latestContent = existingcontent.concat(latestContent)
-            // console.log(latestContent);
             
             const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: latestContent } }, { upsert: true })
             // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
-            // sampleText.length = 0
+            sampleText.length = 0
 
           })
 
