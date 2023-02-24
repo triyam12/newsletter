@@ -30,10 +30,10 @@ router.get("/jsonData", async (req, res) => {
             // console.log(csv);
 
             // await csv.toDisk(`temp/discordData.csv`);
-            fs.writeFileSync('temp/discordData.json', json, 'utf8')
+            fs.writeFileSync('discordData.json', json, 'utf8')
 
-            return res.download(`temp/discordData.json`, () => {
-                fs.unlinkSync(`temp/discordData.json`)
+            return res.download(`discordData.json`, () => {
+                fs.unlinkSync(`discordData.json`)
                
             })
         }
