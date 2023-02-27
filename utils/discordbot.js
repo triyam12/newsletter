@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, GatewayIntentBits } = require('discord.js');
 const DiscordSchema = require("../model/discordSchema")
+const currentDate = new Date();
 
 const client = new Client({
   intents: [
@@ -22,6 +23,7 @@ const discordbot = async (options) => {
 
         // if (message.author.bot) return;
         let sampleText = []
+        let sampleUser = []
         const channel = client.channels.cache.get(channelInfo[j]["channelID"])
 
 
@@ -30,7 +32,11 @@ const discordbot = async (options) => {
           channel.messages.fetch({ limit: 100 }).then(async messages => {
             console.log(`Received ${messages.size} messages`);
             //Iterate through the messages here with the variable "messages".
-            messages.forEach(message => sampleText.push(message.content))
+            messages.forEach(message => sampleText.push({
+              name: message.author.username,
+              content: message.content,
+              time: currentDate.toLocaleString()
+            }))
 
             let result = ''
             for (let i = 0; i < sampleText.length; i++) {
@@ -52,12 +58,14 @@ const discordbot = async (options) => {
               return a;
           };
 
+          console.log(sampleText);
+
             const existingcontent = channelInfo[j]['channelContent']
 
             let latestContent = existingcontent.concat(sampleText).unique()
 
             
-            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: latestContent } }, { upsert: true })
+            const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelNewContent: latestContent } }, { upsert: true })
             // const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
 
             sampleText.length = 0

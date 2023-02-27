@@ -50,55 +50,19 @@ client.login(process.env.BOT_TOKEN);
 
 
 router.get("/test", async (req, res) => {
-   console.log("***********************Debuging***************************");
-   client.on('messageCreate', async (message) => {
-   let channelIDarray = []
-   console.log("***********************Debuging***************************");
-      const channelInfo = await DiscordSchema.find()
-      console.log("***********************Debuging***************************");
-      for (let j = 0; j < channelInfo.length; j++) {
-        channelIDarray.push(channelInfo[j]["channelID"]);
-        console.log("***********************Debuging***************************");
-        // if (message.author.bot) return;
-        let sampleText = []
-        const channel = client.channels.cache.get(channelInfo[j]["channelID"])
-        console.log("***********************Debuging***************************");
+   try {
 
-        console.log("***********************Debuging***************************");
-        if (message.author.bot) {
-         console.log("***********************Debuging***************************");
-          channel.messages.fetch({ limit: 100 }).then(async messages => {
-            console.log("***********************Debuging***************************");
-            console.log(`Received ${messages.size} messages`);
-            //Iterate through the messages here with the variable "messages".
-            messages.forEach(message => sampleText.push(message.content))
-            console.log("***********************Debuging***************************");
+      const allDiscord = await DiscordSchema.find({ serverName: "Avium World" })
+      // for (let i; i< allDiscord.length; i++) {
 
-            let result = ''
-            console.log("***********************Debuging***************************");
-            for (let i = 0; i < sampleText.length; i++) {
-               console.log("***********************Debuging***************************");
-              result = result.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
-              result = result.replace(/[^a-zA-Z ]/g, "")
-              result = result + " "
-              result = result.concat(sampleText[i]);
-              console.log("***********************Debuging***************************");
-              console.log(channelInfo['channelID']);
+      // }
+      console.log(allDiscord);
+      res.send(allDiscord)
+   } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+      console.log(error);
+   }
 
-            }
-
-            console.log(sampleText);
-            console.log("***********************Debuging***************************");
-            // const updatedContent = await DiscordSchema.updateOne({ channelID: channelInfo[j]["channelID"] }, { $set: { channelContent: sampleText } }, { upsert: true })
-            const updatedContent = await DiscordSchema.replaceOne({ channelID: channelInfo[j]["channelID"] }, { channelContent: sampleText })
-            console.log("***********************Debuging***************************");
-            sampleText.length = 0
-            console.log("***********************Debuging***************************");
-          })
-
-        }
-      }
-   })
 })
 
 

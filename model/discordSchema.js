@@ -14,6 +14,10 @@ const discordSchema = new mongoose.Schema({
         type: Array,
         "default": []
     },
+    "channelNewContent": {
+        type: Array,
+        "default": []
+    },
     "channelSummary": {
         type: Array,
         "default": []
